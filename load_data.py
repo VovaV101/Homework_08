@@ -1,9 +1,16 @@
 import json
+import os
 from mongoengine import connect
-from models import Author, Quote
+from models import Quote, Author
+from dotenv import load_dotenv
 
-# Підключення до бази даних
-connect(db='your_database', host='your_host')
+load_dotenv()
+
+# Отримання значень змінних середовища
+mongo_uri = os.getenv("MONGO_URI")
+password = os.getenv("PASSWORD")
+
+connect(db='your_database', host=mongo_uri.replace("<password>", password))
 
 # Завантаження авторів
 with open('authors.json', 'r', encoding='utf-8') as file:
